@@ -1,0 +1,30 @@
+{
+  "name": "sketch-select-beyond",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "sketch": ">=49.0"
+  },
+  "skpm": {
+    "name": "sketch-select-beyond",
+    "manifest": "src/manifest.json",
+    "main": "sketch-select-beyond.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ],
+    "sketch-assets-file": "sketch-assets/icons.sketch"
+  },
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch --run",
+    "postinstall": "npm run build && skpm-link"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.7.0"
+  },
+  "author": "Andrew Newhouse <logoandrew@gmail.com>",
+  "dependencies": {
+    "sketch-module-web-view": "^3.4.1"
+  }
+}

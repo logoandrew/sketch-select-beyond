@@ -1,0 +1,60 @@
+{
+  "version": "0.0.1",
+  "name": "Sketch Select Beyond",
+  "description": "A Sketch plugin...",
+  "author": "Andrew Newhouse",
+  "homepage": "",
+  "commands": [
+    {
+      "name": "Select Layers Above",
+      "identifier": "select-above",
+      "script": "./select.js",
+      "handler": "selectAbove",
+      "description": "Select all layers above your selection."
+    },
+    {
+      "name": "Select Layers Below",
+      "identifier": "select-below",
+      "script": "./select.js",
+      "handler": "selectBelow",
+      "description": "Select all layers below your selection."
+    },
+    {
+      "name": "Select Layers On Left",
+      "identifier": "select-left",
+      "script": "./select.js",
+      "handler": "selectLeft",
+      "description": "Select all layers on the left of your selection."
+    },
+    {
+      "name": "Select Layers On Right",
+      "identifier": "select-right",
+      "script": "./select.js",
+      "handler": "selectRight",
+      "description": "Select all layers on the right of your selection."
+    },
+    {
+      "name": "Settings…",
+      "identifier": "settings",
+      "script": "./settings.js",
+      "handlers": {
+        "run": "onRun",
+        "actions": {
+          "Shutdown": "onShutdown"
+        }
+      },
+      "description": "Change the behaviors for Select-Beyond commands."
+    }
+  ],
+  "menu": {
+    "title": "🤘 Select Beyond",
+    "items": [
+      "select-above",
+      "select-below",
+      "select-left",
+      "select-right",
+      "-",
+      "settings"
+    ]
+  }
+}

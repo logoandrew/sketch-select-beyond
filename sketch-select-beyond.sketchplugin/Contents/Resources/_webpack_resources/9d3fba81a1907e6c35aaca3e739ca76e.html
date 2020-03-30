@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <style>
+    :root {
+      color-scheme: light dark;
+      --text: #000;
+      --button-fg: #fff;
+      --button-bg: #136feb;
+      --button-bg-pressed: #0057cc;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #fff;
+      }
+    }
+
+    html {
+      box-sizing: border-box;
+      background: transparent;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    input,
+    textarea {
+      -webkit-user-select: auto;
+      user-select: auto;
+    }
+
+    body {
+      font-family: -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 18px;
+      color: var(--text);
+    }
+
+    main {
+      padding: 12px 16px;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: flex;
+      padding: 2px 0;
+      align-items: center;
+    }
+
+    .label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      margin-right: 6px;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 4px;
+      width: 100%;
+      height: 32px;
+      background-color: var(--button-bg);
+      font-weight: bold;
+      font-size: inherit;
+      color: var(--button-fg);
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    button:active {
+      background-color: var(--button-bg-pressed);
+    }
+
+    /* .footer {
+      font-size: 12px;
+      opacity: 0.6;
+    } */
+  </style>
+</head>
+
+
+
+<body>
+  <main>
+    <p>
+      <span class="label">Select layers in&hellip;</span>
+      <label>
+        <input type="radio" name="context" id="context-artboard" />
+        <span>Artboard</span>
+      </label>
+      <label>
+        <input type="radio" name="context" id="context-group" />
+        <span>Group</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input type="checkbox" id="include-equal-layers" />
+        <span>Include layers within selected layer's space</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input type="checkbox" id="ignore-hidden" />
+        <span>Ignore hidden layers</span>
+      </label>
+      <label>
+        <input type="checkbox" id="ignore-locked" />
+        <span>Ignore locked layers</span>
+      </label>
+    </p>
+    <p>
+      <button id="done">Done</button>
+    </p>
+    <!-- <p class="footer">
+      <a href="https://github.com/charliecm/sketch-snap/issues">Give Feedback</a>
+      • by
+      <a href="https://twitter.com/charliecm">@charliecm</a>
+    </p> -->
+  </main>
+
+
+
+  <script>
+    // Disable context menu
+    document.addEventListener("contextmenu", e => {
+      e.preventDefault();
+    });
+
+    window.updateSettings = (
+      context,
+      includeEqualLayers,
+      ignoreHidden,
+      ignoreLocked
+    ) => {
+      document.getElementById(`context-${context}`).checked = true;
+      document.getElementById("include-equal-layers").checked = includeEqualLayers;
+      document.getElementById("ignore-hidden").checked = ignoreHidden;
+      document.getElementById("ignore-locked").checked = ignoreLocked;
+    };
+
+    document.getElementById("context-artboard").addEventListener("change", e => {
+      if (e.currentTarget.checked) {
+        window.postMessage("context", "artboard");
+      }
+    });
+
+    document.getElementById("context-group").addEventListener("change", e => {
+      if (e.currentTarget.checked) {
+        window.postMessage("context", "group");
+      }
+    });
+
+    document
+      .getElementById("include-equal-layers")
+      .addEventListener("change", e => {
+        window.postMessage("includeEqualLayers", e.currentTarget.checked);
+      });
+
+    document.getElementById("ignore-hidden").addEventListener("change", e => {
+      window.postMessage("ignoreHidden", e.currentTarget.checked);
+    });
+
+    document.getElementById("ignore-locked").addEventListener("change", e => {
+      window.postMessage("ignoreLocked", e.currentTarget.checked);
+    });
+
+    document.getElementById("done").addEventListener("click", () => {
+      window.postMessage("close");
+    });
+
+    document.querySelectorAll("a[href]").forEach(el => {
+      el.addEventListener("click", e => {
+        e.preventDefault();
+        window.postMessage("openLink", e.currentTarget.href);
+      });
+    });
+  </script>
+</body>
+
+</html>
