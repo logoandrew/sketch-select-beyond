@@ -99,37 +99,29 @@ function getLayers(
   let position = 0;
   let isInRegion = false;
   if (direction === "above") {
-    // Layer is above target's bottom edge
     position = frame.y + frame.height;
-    isInRegion = position <= targetFrame.y + targetFrame.height;
-    if (!includeEqualLayers) {
-      // Layer is above target's top edge
-      isInRegion = position <= targetFrame.y;
-    }
+    // Layer is above target's bottom edge (or top edge)
+    isInRegion = includeEqualLayers
+      ? position <= targetFrame.y + targetFrame.height
+      : position <= targetFrame.y;
   } else if (direction === "below") {
-    // Layer is below target's top edge
     position = frame.y;
-    isInRegion = position >= targetFrame.y;
-    if (!includeEqualLayers) {
-      // Layer is below target's bottom edge
-      isInRegion = position >= targetFrame.y + targetFrame.height;
-    }
+    // Layer is below target's top edge (or bottom edge)
+    isInRegion = includeEqualLayers
+      ? position >= targetFrame.y
+      : position >= targetFrame.y + targetFrame.height;
   } else if (direction === "left") {
-    // Layer is left of target's right edge
     position = frame.x + frame.width;
-    isInRegion = position <= targetFrame.x + targetFrame.width;
-    if (!includeEqualLayers) {
-      // Layer is left of target's left edge
-      isInRegion = position <= targetFrame.x;
-    }
+    // Layer is left of target's right edge (or left edge)
+    isInRegion = includeEqualLayers
+      ? position <= targetFrame.x + targetFrame.width
+      : position <= targetFrame.x;
   } else {
-    // Layer is right of target's left edge
     position = frame.x;
-    isInRegion = position >= targetFrame.x;
-    if (!includeEqualLayers) {
-      // Layer is right of target's right edge
-      isInRegion = position >= targetFrame.x + targetFrame.width;
-    }
+    // Layer is right of target's left edge (or right edge)
+    isInRegion = includeEqualLayers
+      ? position >= targetFrame.x
+      : position >= targetFrame.x + targetFrame.width;
   }
 
   const isIgnored =

@@ -4,7 +4,6 @@
 
 import BrowserWindow from "sketch-module-web-view";
 import { getWebview } from "sketch-module-web-view/remote";
-import UI from "sketch/ui";
 import Settings from "sketch/settings";
 import { getSettings } from "./utils";
 

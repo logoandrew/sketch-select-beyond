@@ -267,41 +267,21 @@ function getLayers(direction, target, context, includeEqualLayers, ignoreHidden,
   var isInRegion = false;
 
   if (direction === "above") {
-    // Layer is above target's bottom edge
-    position = frame.y + frame.height;
-    isInRegion = position <= targetFrame.y + targetFrame.height;
+    position = frame.y + frame.height; // Layer is above target's bottom edge (or top edge)
 
-    if (!includeEqualLayers) {
-      // Layer is above target's top edge
-      isInRegion = position <= targetFrame.y;
-    }
+    isInRegion = includeEqualLayers ? position <= targetFrame.y + targetFrame.height : position <= targetFrame.y;
   } else if (direction === "below") {
-    // Layer is below target's top edge
-    position = frame.y;
-    isInRegion = position >= targetFrame.y;
+    position = frame.y; // Layer is below target's top edge (or bottom edge)
 
-    if (!includeEqualLayers) {
-      // Layer is below target's bottom edge
-      isInRegion = position >= targetFrame.y + targetFrame.height;
-    }
+    isInRegion = includeEqualLayers ? position >= targetFrame.y : position >= targetFrame.y + targetFrame.height;
   } else if (direction === "left") {
-    // Layer is left of target's right edge
-    position = frame.x + frame.width;
-    isInRegion = position <= targetFrame.x + targetFrame.width;
+    position = frame.x + frame.width; // Layer is left of target's right edge (or left edge)
 
-    if (!includeEqualLayers) {
-      // Layer is left of target's left edge
-      isInRegion = position <= targetFrame.x;
-    }
+    isInRegion = includeEqualLayers ? position <= targetFrame.x + targetFrame.width : position <= targetFrame.x;
   } else {
-    // Layer is right of target's left edge
-    position = frame.x;
-    isInRegion = position >= targetFrame.x;
+    position = frame.x; // Layer is right of target's left edge (or right edge)
 
-    if (!includeEqualLayers) {
-      // Layer is right of target's right edge
-      isInRegion = position >= targetFrame.x + targetFrame.width;
-    }
+    isInRegion = includeEqualLayers ? position >= targetFrame.x : position >= targetFrame.x + targetFrame.width;
   }
 
   var isIgnored = ignoreHidden && layer.hidden || ignoreLocked && layer.locked;
